@@ -1,6 +1,6 @@
 
 const pool = require('../db/db');
-
+const bcrypt = require('bcrypt');
 async function librosAutors(req,res){
     try{
         const autorId = req.params.id;
@@ -49,7 +49,7 @@ async function altaUsers(req, res) {
             nameUser,
             age,
             job,
-            password
+        
         });
     } catch (error) {
         console.error(error);
