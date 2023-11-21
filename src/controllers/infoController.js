@@ -39,15 +39,17 @@ async function autorsBooks(req, res) {
 }
 async function altaUsers(req, res) {
     try {
-        const { nameUser, age, job } = req.body;
-        await pool.query('CALL AltaUsuario(?, ?, ?, @insertId)', [nameUser, age, job]);
+        const { nameUser, age, job,password } = req.body;
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await pool.query('CALL AltaUsuario(?, ?, ?, ?,@insertId)', [nameUser, age, job,hashedPassword]);
         const insertIdResult = await pool.query('SELECT @insertId as insertId');
         const insertId = insertIdResult[0][0].insertId;
         res.send({
             id:insertId,
             nameUser,
             age,
-            job
+            job,
+            password
         });
     } catch (error) {
         console.error(error);

@@ -5,8 +5,8 @@ const pool = ('../db/db.js')
 
 async function login (req,res) {
     try {
-    const {userName,password} = req.body;
-    const [users] = await pool.query('Select * From usuarios WHERE userName =?',[userName])
+    const {nameUser,password} = req.body;
+    const [users] = await pool.query('Select * From usuarios WHERE nameUser =?',[nameUser])
     if (!users || users.length === 0) {
         res.status(500),json({
             message:'User not found',
@@ -23,7 +23,7 @@ async function login (req,res) {
             })
         }
 
-        const token  = jwt.sign({userId:user.id, userName:user.userName},'your_access',{expiresIn:'1h'});
+        const token  = jwt.sign({userId:user.id, nameUser:user.nameUser},'your_access',{expiresIn:'1h'});
         res.json({
             message:'Logged successfully',
             token
