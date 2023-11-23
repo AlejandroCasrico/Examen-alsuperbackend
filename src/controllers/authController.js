@@ -1,11 +1,12 @@
 const { query } = require("../db/db");
 const jwt = require('jsonwebtoken')
 const bycript = require('bcrypt')
-const pool = ('../db/db.js')
+const pool = require('../db/db');
 
 async function login (req,res) {
     try {
     const {nameUser,password} = req.body;
+    
     const [users] = await pool.query('Select * From usuarios WHERE nameUser =?',[nameUser])
     if (!users || users.length === 0) {
         res.status(500),json({

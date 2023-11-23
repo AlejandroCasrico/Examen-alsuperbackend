@@ -11,11 +11,12 @@ const jwt = require('jsonwebtoken')
     try {
         const decoded = await jwt.verify(token,'your access');
          req.user = decoded;
-        next();
+
           res.status(200).json({
             message:'token valid',
             token
         })
+                next();
     } catch (error) {
         return res.status(403).json({
             message: 'Invalid token',
